@@ -22,12 +22,13 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $posts = Post::orderBy('updated_at','DESC')->get();
         // $post = Post::all();
         // dd($post);
 
         return view('blog.index')
-            ->with('posts',Post::orderBy('updated_at','DESC')->get());
+            ->with('posts',$posts);
     }
  
     /**
@@ -52,7 +53,7 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:png,jpg,jpeg|max:5048'
+            'image' => 'required|file|mimes:png,jpg,jpeg|max:5048'
         ]);
 
         // Generate new image name
@@ -84,7 +85,8 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
-    {
+    {             
+          
         return view('blog.show')
             ->with('post', Post::where('slug', $slug)->first());
     }

@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/c88e92549b.js" crossorigin="anonymous"></script>
     
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -31,17 +32,21 @@
                     <a class="no-underline hover:underline" href="/blog">Blog</a>
 
                     @guest
+                        {{-- NINCS AUTENTIKÁLVA --}}
                         <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @if (Route::has('register'))
+                        @if (Route::has('register'))                                                 
                             <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     @else
+                    {{--  AUTENTIKÁLVA van --}}
                         <span>{{ Auth::user()->name }}</span>
 
                         <a href="{{ route('logout') }}"
                            class="no-underline hover:underline"
                            onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                        </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             {{ csrf_field() }}
                         </form>
